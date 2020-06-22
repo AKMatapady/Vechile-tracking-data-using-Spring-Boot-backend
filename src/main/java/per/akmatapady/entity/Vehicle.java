@@ -9,22 +9,35 @@ public class Vehicle {
     private String vin;
     private String make;
     private String model;
-    private String year;
-    private int readlineRPM;
+    private int year;
+    private int redlineRpm;
     private float maxFuelVolume;
     private String lastServiceDate;
 
     public Vehicle() {
     }
 
-    public Vehicle(String vin, String make, String model, String year, int readlineRPM, float maxFuelVolume, String lastServiceDate) {
+    public Vehicle(String vin, String make, String model, int year, int redlineRpm, float maxFuelVolume, String lastServiceDate) {
         this.vin = vin;
         this.make = make;
         this.model = model;
         this.year = year;
-        this.readlineRPM = readlineRPM;
+        this.redlineRpm = redlineRpm;
         this.maxFuelVolume = maxFuelVolume;
         this.lastServiceDate = lastServiceDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "vin='" + vin + '\'' +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", year=" + year +
+                ", redlineRpm=" + redlineRpm +
+                ", maxFuelVolume=" + maxFuelVolume +
+                ", lastServiceDate='" + lastServiceDate + '\'' +
+                '}';
     }
 
     public String getVin() {
@@ -51,20 +64,20 @@ public class Vehicle {
         this.model = model;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
-    public int getReadlineRPM() {
-        return readlineRPM;
+    public int getRedlineRpm() {
+        return redlineRpm;
     }
 
-    public void setReadlineRPM(int readlineRPM) {
-        this.readlineRPM = readlineRPM;
+    public void setRedlineRpm(int redlineRpm) {
+        this.redlineRpm = redlineRpm;
     }
 
     public float getMaxFuelVolume() {
