@@ -1,4 +1,6 @@
 package per.akmatapady.repository;
 
-public class ReadingRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface ReadingRepository extends CrudRepository {
 }

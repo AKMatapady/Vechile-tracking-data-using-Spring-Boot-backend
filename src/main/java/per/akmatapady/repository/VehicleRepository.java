@@ -1,4 +1,6 @@
 package per.akmatapady.repository;
 
-public class VehicleRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface VehicleRepository extends CrudRepository {
 }
