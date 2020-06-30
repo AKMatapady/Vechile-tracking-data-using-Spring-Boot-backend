@@ -12,5 +12,5 @@
 **/RemoteSystemsTempFiles
 
 **/target/*
-**/resource/*
-**/src/main/resource/*
+**/resources/*
+**/src/main/resources/*
