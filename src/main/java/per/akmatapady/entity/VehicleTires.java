@@ -64,4 +64,12 @@ public class VehicleTires {
     public void setRearRight(float rearRight) {
         this.rearRight = rearRight;
     }
+
+    public float getMinTirePressure() {
+        return Math.min(frontLeft, Math.min(frontRight, Math.min(rearLeft, rearRight)));
+    }
+
+    public float getMaxTirePressure() {
+        return Math.max(frontLeft, Math.max(frontRight, Math.max(rearLeft, rearRight)));
+    }
 }

@@ -1,16 +1,21 @@
 package per.akmatapady.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
+//@NamedQueries({
+//        @NamedQuery(name = "Alert.findHighAlerts", query = "SELECT alert FROM Alert alert where alert.Severity =: paramPriority order by alert.vin"),
+//        @NamedQuery(name = "Alert.findAlerts", query = "select alert from Alert alert where alert.vin =: paramVin")
+//})
 public class Alert {
 
     @Id
     private String id;
     private String vin;
     private String timestamp;
+    @Enumerated
     private AlertRule alertRule;
     private Severity priority;
 

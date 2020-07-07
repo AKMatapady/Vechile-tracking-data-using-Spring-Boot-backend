@@ -1,9 +1,7 @@
 package per.akmatapady.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @IdClass(VehicleReadingID.class)
