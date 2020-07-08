@@ -1,4 +1,4 @@
-Look at module-api branch for latest update on this project
+Look at **module-api** branch for latest update on this project
 
 # trucker-seed
 seed for the Webservices & Cloud project
