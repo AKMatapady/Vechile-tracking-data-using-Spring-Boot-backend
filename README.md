@@ -1,4 +1,4 @@
-# trucker-seed
+# Vehicle Tracker
 seed for the Webservices & Cloud project
 
 **`Docker Image URL`**: `https://hub.docker.com/repository/docker/akmatapady/tracker`
