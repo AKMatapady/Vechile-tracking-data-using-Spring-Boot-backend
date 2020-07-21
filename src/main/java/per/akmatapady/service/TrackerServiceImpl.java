@@ -1,9 +1,12 @@
 package per.akmatapady.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import per.akmatapady.awsmessaging.AlertNotification;
 import per.akmatapady.entity.*;
 import per.akmatapady.exception.ResourceNotFoundException;
 import per.akmatapady.repository.AlertRepository;
@@ -33,6 +36,12 @@ public class TrackerServiceImpl implements TrackerService {
     @Autowired
     private AlertRepository alertRepo;
 
+    @Autowired
+    private AlertNotification notifyAlert;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
     @Transactional
     public List<Vehicle> addVehicles(List<Vehicle> vehicleList) {
@@ -41,7 +50,7 @@ public class TrackerServiceImpl implements TrackerService {
 
     @Override
     @Transactional
-    public VehicleReading addReadings(VehicleReading vehicleReading) {
+    public VehicleReading addReadings(VehicleReading vehicleReading) throws JsonProcessingException {
         Optional<Vehicle> v = vehicleRepo.findById(vehicleReading.getVin());
         if(!v.isPresent())
         {
@@ -56,7 +65,11 @@ public class TrackerServiceImpl implements TrackerService {
             alert.setTimestamp(vehicleReading.getTimestamp());
             alert.setAlertRule(AlertRule.RPM_TOO_HIGH);
             alert.setPriority(Severity.HIGH);
+            String message = objectMapper.writeValueAsString(alert);
+            notifyAlert.send("Vehicle " + vehicleReading.getVin() + " RPM is too high", message);
+            System.out.println("HIGH ALERT for vehicle with vin " + vehicleReading.getVin());
             alertRepo.save(alert);
+
         }
         if(vehicleReading.getFuelVolume() < (0.1 * v.get().getMaxFuelVolume()))
         {
@@ -65,6 +78,8 @@ public class TrackerServiceImpl implements TrackerService {
             alert.setTimestamp(vehicleReading.getTimestamp());
             alert.setAlertRule(AlertRule.LOW_FUEL);
             alert.setPriority(Severity.MEDIUM);
+//            String message = objectMapper.writeValueAsString(alert);
+//            notifyAlert.send("Vehicle " + vehicleReading.getVin() + " fuel is low", message);
             alertRepo.save(alert);
         }
         if(vehicleReading.getTires().getMinTirePressure() < 32 || vehicleReading.getTires().getMaxTirePressure() > 36)
@@ -74,6 +89,8 @@ public class TrackerServiceImpl implements TrackerService {
             alert.setTimestamp(vehicleReading.getTimestamp());
             alert.setAlertRule(AlertRule.INCORRECT_TIRE_PRESSURE);
             alert.setPriority(Severity.LOW);
+//            String message = objectMapper.writeValueAsString(alert);
+//            notifyAlert.send("Vehicle " + vehicleReading.getVin() + " Tire Pressure is not optimal", message);
             alertRepo.save(alert);
         }
         if(vehicleReading.isCheckEngineLightOn() || vehicleReading.isEngineCoolantLow())
@@ -83,6 +100,8 @@ public class TrackerServiceImpl implements TrackerService {
             alert.setTimestamp(vehicleReading.getTimestamp());
             alert.setAlertRule(AlertRule.ENGINE_CHECK_REQUIRED);
             alert.setPriority(Severity.LOW);
+//            String message = objectMapper.writeValueAsString(alert);
+//            notifyAlert.send("Vehicle " + vehicleReading.getVin() + " needs service (coolant or engine)", message);
             alertRepo.save(alert);
         }
         return readingRepo.save(vehicleReading);

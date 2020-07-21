@@ -1,9 +1,14 @@
 package per.akmatapady.controller;
 
+import com.amazonaws.services.sns.AmazonSNS;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.aws.messaging.core.NotificationMessagingTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
+import per.akmatapady.awsmessaging.AlertNotification;
 import per.akmatapady.entity.Alert;
 import per.akmatapady.entity.Location;
 import per.akmatapady.entity.Vehicle;
@@ -22,6 +27,7 @@ public class TrackerController {
     @Qualifier("trackerServiceImpl")
     private TrackerService trackerService;
 
+
     @PutMapping(value = "vehicles")
     public List<Vehicle> addVehicles(@RequestBody List<Vehicle> vehicleList)
     {
@@ -29,8 +35,7 @@ public class TrackerController {
     }
 
     @PostMapping(value = "readings")
-    public VehicleReading addReading(@RequestBody VehicleReading vehicleReading)
-    {
+    public VehicleReading addReading(@RequestBody VehicleReading vehicleReading) throws JsonProcessingException {
         return trackerService.addReadings(vehicleReading);
     }
 
