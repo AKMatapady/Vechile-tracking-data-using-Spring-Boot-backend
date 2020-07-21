@@ -41,6 +41,8 @@ node {
                     --secret spring.datasource.url \
                     --secret spring.datasource.username \
                     --secret spring.datasource.password \
+                    --secret cloud.aws.credentials.accessKey \
+                    --secret cloud.aws.credentials.secretKey \
                     ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}
                 else
                   docker service update \
